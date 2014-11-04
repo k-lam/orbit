@@ -1,0 +1,9 @@
+.metadata/
+*.o
+*.a
+*.class
+*.so
+*.o.d
+*.settings
+*.dex
+*.classpath
