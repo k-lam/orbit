@@ -12,11 +12,18 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 
 public class BitmapLoop2 {
+	/**
+	 * 调试跟踪用
+	 */
 	static int controlID = 0;
 
-	// AtomicInteger diskPointer;
-
+	/**
+	 * disk中左指针
+	 */
 	int diskPointer_l;
+	/**
+	 * disk中右指针
+	 */
 	int diskPointer_r;
 
 	int count;
@@ -30,17 +37,28 @@ public class BitmapLoop2 {
 	 * 任务队列
 	 */
 	TasksManager tasksManager = new TasksManager();
+	
+	/**
+	 * 这个app允许的最大内存数，单位是m
+	 */
+	static int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024 / 1024);
 
-	final static int CPU_COUNT = Runtime.getRuntime().availableProcessors();
+	final static int EXTRA_COUNT = maxMemory > 48 ? 2 : 1;
 
 	/**
 	 * 窗口容量，请用奇数
 	 */
-	final static int WINDOW_CAPACITY = CPU_COUNT > 2 ? 9 : 7;
+	final static int WINDOW_CAPACITY = maxMemory > 48 ? 9 : 7;
 
-	final static int Full_Main = (WINDOW_CAPACITY / 2 + CPU_COUNT) >= WINDOW_CAPACITY ? (WINDOW_CAPACITY / 2 + 2)
-			: (WINDOW_CAPACITY / 2 + CPU_COUNT);
+	/**
+	 * 正满
+	 */
+	final static int Full_Main = (WINDOW_CAPACITY / 2 + EXTRA_COUNT) >= WINDOW_CAPACITY ? (WINDOW_CAPACITY / 2 + 2)
+			: (WINDOW_CAPACITY / 2 + EXTRA_COUNT);
 
+	/**
+	 * 反满
+	 */
 	final static int Full_Anti = WINDOW_CAPACITY - Full_Main;
 	// final static int Mid = WINDOW_CAPACITY / 2;
 	LinkedList<BitmapWithName> bitmapWindow = new LinkedList<BitmapWithName>();

@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 public class main extends Activity implements OnClickListener{
 	
-	final static String AVINAME = "watch264.avi";
+	final static String AVINAME = "video.avi";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +44,10 @@ public class main extends Activity implements OnClickListener{
 		}
 		FileOutputStream os = null;
 		InputStream is = null;
-		if(flag){
+		if(!flag){
 			try {
 				os = openFileOutput(AVINAME, 0);
-				is = getAssets().open("watch264.avi");
+				is = getAssets().open("avi/"+AVINAME);
 				byte[] buf = new byte[1024];
 				int bytesRead;
 				while ((bytesRead = is.read(buf)) > 0) {

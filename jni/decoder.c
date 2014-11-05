@@ -105,13 +105,13 @@ void *SaveFramePNG2(void *paramss)
 }
 
 /**
- * @return -1,出错.>0 返回解压出的图片数
+ * @return -1,鍑洪敊.>0 杩斿洖瑙ｅ帇鍑虹殑鍥剧墖鏁�
  */
 int decode2pixel(char *videoPath, char *framePath, char *framePfx,
 		int maxFrameCount, int *width, int *height)
 {
 	long lstrat = clock();
-//	__android_log_print(3, "debug", "maxFrameCount is %d", maxFrameCount);
+	__android_log_print(3, "debug", "maxFrameCount is %d", maxFrameCount);
 	AVFormatContext *pFormatCtx = NULL;
 	int i, videoStream;
 	AVCodecContext *pCodecCtx = NULL;
@@ -139,7 +139,7 @@ int decode2pixel(char *videoPath, char *framePath, char *framePfx,
 		if (pFormatCtx->streams[i]->codec->codec_type == AVMEDIA_TYPE_VIDEO)
 		{
 			videoStream = i;
-//			log_kl("30");
+			log_kl("30");
 			break;
 		}
 	}
@@ -151,10 +151,10 @@ int decode2pixel(char *videoPath, char *framePath, char *framePfx,
 
 	// Get a pointer to the codec context for the video stream
 	pCodecCtx = pFormatCtx->streams[videoStream]->codec;
-//	log_kl("43");
+	log_kl("43");
 	// Find the decoder for the video stream
 	pCodec = avcodec_find_decoder(pCodecCtx->codec_id);
-//	log_kl("44");
+	log_kl("44");
 	if (pCodec == NULL)
 	{
 		//fprintf(stderr, "Unsupported codec!\n");
@@ -181,7 +181,7 @@ int decode2pixel(char *videoPath, char *framePath, char *framePfx,
 		log_kl("70");
 		return -1;
 	}
-//	log_kl("71");
+	log_kl("71");
 	// Determine required buffer size and allocate buffer
 	//AV_PIX_FMT_ARGB
 	numBytes = avpicture_get_size(AV_PIX_FMT_BGR24, pCodecCtx->width,
@@ -190,13 +190,13 @@ int decode2pixel(char *videoPath, char *framePath, char *framePfx,
 	{
 		log_kl("71.5");
 	}
-//	log_kl("72");
+	log_kl("72");
 	buffer = (uint8_t *) av_malloc(numBytes * sizeof(uint8_t));
 	if (buffer == NULL)
 	{
 		log_kl("72.5");
 	}
-//	log_kl("73");
+	log_kl("73");
 	// Assign appropriate parts of buffer to image planes in pFrameRGB
 	// Note that pFrameRGB is an AVFrame, but AVFrame is a superset
 	// of AVPicture
@@ -206,16 +206,16 @@ int decode2pixel(char *videoPath, char *framePath, char *framePfx,
 		log_kl("73.5");
 		return -1;
 	}
-//	log_kl("74");
+	log_kl("74");
 	if (AV_PIX_FMT_NONE == pCodecCtx->pix_fmt)
 	{
-//		log_kl("fffffffffffffffffffff*ck");
+		log_kl("fffffffffffffffffffff*ck");
 		pCodecCtx->pix_fmt = AV_PIX_FMT_YUV444P;
 	} //AV_PIX_FMT_BGR24
 	struct SwsContext *sws_ctx = sws_getContext(pCodecCtx->width,
 			pCodecCtx->height, pCodecCtx->pix_fmt, pCodecCtx->width,
 			pCodecCtx->height, AV_PIX_FMT_BGR24, SWS_BICUBIC, NULL, NULL, NULL);
-//	log_kl("120");
+	log_kl("120");
 	*width = pCodecCtx->width;
 	*height = pCodecCtx->height;
 	// Read frames and save first five frames to disk
@@ -226,7 +226,7 @@ int decode2pixel(char *videoPath, char *framePath, char *framePfx,
 	__android_log_print(3, "kldebug", "ready used:%f",(double) (clock() - lstrat) / CLOCKS_PER_SEC);
 	while (av_read_frame(pFormatCtx, &packet) >= 0)
 	{
-		//__android_log_print(3, "debug", "read count is %d， frameFinished is %d",ok++,frameFinished);
+		//__android_log_print(3, "debug", "read count is %d锛�frameFinished is %d",ok++,frameFinished);
 		// Is this a packet from the video stream?
 		if (packet.stream_index == videoStream)
 		{

@@ -27,6 +27,9 @@
 								</outputEntries>
 							</builder>
 							<tool id="com.android.gcc.compiler.1234699594" name="Android GCC Compiler" superClass="com.android.gcc.compiler">
+								<option id="com.android.gcc.option.includePath.1910508606" superClass="com.android.gcc.option.includePath" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;D:\currentworkspace\android-ndk-r9d-windows-x86\android-ndk-r9d\platforms\android-14\arch-arm\usr\include&quot;"/>
+								</option>
 								<inputType id="com.android.gcc.inputType.332269913" superClass="com.android.gcc.inputType"/>
 							</tool>
 						</toolChain>
@@ -52,4 +55,5 @@
 			<resource resourceType="PROJECT" workspacePath="/Orbit"/>
 		</configuration>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cproject>

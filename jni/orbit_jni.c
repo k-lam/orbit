@@ -82,10 +82,11 @@ void release()
 }
 
 //涓嶅厑璁稿彇娑堟搷浣滐紝涓斿簲璇ョ瓑寰呮枃浠跺瓨鍌ㄥ畬鎴愬啀杩涜涓嬩竴娆ava_show360_Extractor_extract鐨勮皟鐢�
-jobject Java_show360_Extractor_extract(JNIEnv* env, jobject thiz,
+jobject Java_orbit_Extractor_extract(JNIEnv* env, jobject thiz,
 		jstring videoPath, jstring framePath, jstring framePfx,
 		jint maxFrameCount)
 {
+	log_kl("0.000");
 	init();
 	int width, height = NULL;
 	c_thiz = (*env)->NewGlobalRef(env, thiz);
@@ -94,9 +95,10 @@ jobject Java_show360_Extractor_extract(JNIEnv* env, jobject thiz,
 	char *pcPath = (*env)->GetStringUTFChars(env, videoPath, 0);
 	char *pcFramePath = (*env)->GetStringUTFChars(env, framePath, 0);
 	char *pcPfx = (*env)->GetStringUTFChars(env, framePfx, 0);
-
+	log_kl("0.001");
 	int count = decode2pixel(pcPath, pcFramePath, pcPfx, maxFrameCount, &width,
 			&height);
+	log_kl("0.002 ");
 	//release
 	(*env)->ReleaseStringUTFChars(env, videoPath, pcPath);
 	(*env)->ReleaseStringUTFChars(env, framePath, pcFramePath);
@@ -107,7 +109,7 @@ jobject Java_show360_Extractor_extract(JNIEnv* env, jobject thiz,
 	c_class_Extractor = (*env)->NewGlobalRef(env, l_class_Extractor);
 	if (cls == NULL)
 	{
-		log_kl("has not found show360/Extractor$Result ");
+		log_kl("has not found orbit/Extractor$Result ");
 	}
 	jmethodID methodId = (*env)->GetMethodID(env, cls, "<init>", "(III)V");
 	return (*env)->NewObject(env, cls, methodId, width, height, count);
