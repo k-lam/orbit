@@ -39,9 +39,10 @@ public class V360Show extends ImageView {
 						Log.d("debugY","onScroll:"+e1.getRawX()+","+e1.getX()+","+e1.getRawY()+","+e1.getY());
 						if(null != bl){
 							if (distanceX > 0.0001) {
-								bitmap = bl.toLeft(getContext());
-							}else {
 								bitmap = bl.toRight(getContext());
+							}else {
+								bitmap = bl.toLeft(getContext());
+								
 							}
 							if(null != bitmap){
 								V360Show.this.setImageBitmap(bitmap);

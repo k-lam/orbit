@@ -15,53 +15,54 @@ import orbit.Extractor.Result;
 import com.example.orbit.R;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
-public class main extends Activity implements OnClickListener{
-	
-	final static String AVINAME = "video.avi";
+public class main extends Activity implements OnClickListener {
+
+	final static String AVINAME = "w.avi";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		
+
 		findViewById(R.id.btn_del).setOnClickListener(this);
 		findViewById(R.id.btn_extract).setOnClickListener(this);
 		findViewById(R.id.btn_moon).setOnClickListener(this);
 		findViewById(R.id.btn_orbit).setOnClickListener(this);
-		
+
 		boolean flag = false;
-		
-		for(String name : fileList()){
-			if(name.equals(AVINAME)){
+
+		for (String name : fileList()) {
+			if (name.equals(AVINAME)) {
 				flag = true;
 				break;
 			}
 		}
-		FileOutputStream os = null;
-		InputStream is = null;
-		if(!flag){
-			try {
-				os = openFileOutput(AVINAME, 0);
-				is = getAssets().open("avi/"+AVINAME);
-				byte[] buf = new byte[1024];
-				int bytesRead;
-				while ((bytesRead = is.read(buf)) > 0) {
-					os.write(buf, 0, bytesRead);
-				}
-				os.flush();
-				is.close();
-				os.close();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+//		FileOutputStream os = null;
+//		InputStream is = null;
+//		if (!flag) {
+//			try {
+//				os = openFileOutput(AVINAME, 0);
+//				is = getAssets().open("avi/" + AVINAME);
+//				byte[] buf = new byte[1024];
+//				int bytesRead;
+//				while ((bytesRead = is.read(buf)) > 0) {
+//					os.write(buf, 0, bytesRead);
+//				}
+//				os.flush();
+//				is.close();
+//				os.close();
+//			} catch (FileNotFoundException e) {
+//				e.printStackTrace();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
 	}
 
 	@Override
@@ -70,21 +71,27 @@ public class main extends Activity implements OnClickListener{
 		switch (id) {
 		case R.id.btn_extract:
 			Extractor extractor = new Extractor();
-			extractor.extractPic(getFilesDir().getAbsolutePath() + "/"+ AVINAME,
-					getFilesDir().getAbsolutePath(), "wtmp", 50,new ExtractFinishedListener() {
-						
+			extractor.extractPic(getFilesDir().getAbsolutePath() + "/"
+					+ AVINAME, getFilesDir().getAbsolutePath(), "wtmp", 50,
+					new ExtractFinishedListener() {
+
 						@Override
 						public void run(Result result) {
-							Toast.makeText(main.this, "完成", Toast.LENGTH_SHORT).show();
+							Toast.makeText(main.this, "完成", Toast.LENGTH_SHORT)
+									.show();
 						}
 					});
-			//extractor.
 			break;
 		case R.id.btn_del:
 			break;
-		case R.id.btn_orbit:
+		case R.id.btn_orbit: {
+			Intent intent = new Intent(this, testOrbit1.class);
+			startActivity(intent);
+		}
 			break;
 		case R.id.btn_moon:
+			Intent intent = new Intent(this,orbit2_moon.Moon.class);
+			startActivity(intent);
 			break;
 		default:
 			break;

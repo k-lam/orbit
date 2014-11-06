@@ -14,10 +14,10 @@ public class testOrbit1 extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//以下是orbit的测试
-		//setContentView(R.layout.test);
-		//V360Show orbit = (V360Show) findViewById(R.id.orbit_);
-		File path = new File(getFilesDir(), "kltmp");	
-		//orbit.initBitmapLoop(29, path.getAbsolutePath()+"/", "wtmp");
+		setContentView(R.layout.test);
+		V360Show orbit = (V360Show) findViewById(R.id.orbit);
+		//File path = new File(getFilesDir(), "kltmp");	
+		orbit.initBitmapLoop(29, getFilesDir().getAbsolutePath()+"/", "wtmp");
 	}
 
 }

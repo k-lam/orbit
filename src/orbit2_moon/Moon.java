@@ -36,10 +36,11 @@ public class Moon extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//这个公式应该根据用户体验而修改
-		disPerFrame = getResources().getDisplayMetrics().widthPixels / 360 * 10;
+		
+		disPerFrame = (int) (getResources().getDisplayMetrics().xdpi / 16);
 		
 		mGLSurfaceView = new GLSurfaceView(this);
-		render = new Renderer("pkm/g", 1, 31, 1);
+		render = new Renderer("png/wtmp", 0, 30, 0);
 		mGLSurfaceView.setRenderer(render);
 		mGLSurfaceView.post(new Runnable() {
 
@@ -76,7 +77,7 @@ public class Moon extends Activity {
 					public boolean onFling(MotionEvent e1, MotionEvent e2,
 							float velocityX, float velocityY) {
 						// s = v * v / 2a
-						int i = (int) (velocityX * velocityX / 500000 / disPerFrame);
+						int i = (int) (velocityX * velocityX / (250000 * getResources().getDisplayMetrics().xdpi / 160) / disPerFrame);
 						Log.i("debug", "velocityX:" + velocityX + " i:" + i);
 						while (i-- != 0) {
 							if (velocityX > 0) {
@@ -183,6 +184,7 @@ public class Moon extends Activity {
 				int j = 0;
 				for (int i = from; i != from + count; i++) {
 					try {
+						gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[j++]);
 						bitmap = BitmapFactory.decodeStream(getAssets().open(
 								prefix + i + ".png"));
 						gl.glTexParameterf(GL10.GL_TEXTURE_2D,
@@ -193,7 +195,6 @@ public class Moon extends Activity {
 								GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
 						gl.glTexParameterf(GL10.GL_TEXTURE_2D,
 								GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_NEAREST);
-						gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[j++]);
 						GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
 						bitmap.recycle();
 					} catch (Exception e) {
@@ -234,7 +235,9 @@ public class Moon extends Activity {
 
 		@Override
 		public void onSurfaceChanged(GL10 gl, int width, int height) {
-			gl.glViewport(0, (mGLSurfaceView.getHeight() - 432) / 2, 720, 432);
+			//gl.glViewport(0, (mGLSurfaceView.getHeight() - 432) / 2, 720, 432);
+			gl.glViewport(0, (mGLSurfaceView.getHeight() - 480) / 2, 800, 480);
+			//注意，由于没有做压缩处理，原图片是800 * 480的，如果没有做拉伸压缩处理，显示出来的图片是不清晰的，所以这里用回原图800*480大小
 			gl.glMatrixMode(GL10.GL_MODELVIEW);
 			gl.glLoadIdentity();
 			gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
