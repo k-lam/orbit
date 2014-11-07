@@ -40,7 +40,7 @@ public class Moon extends Activity {
 		disPerFrame = (int) (getResources().getDisplayMetrics().xdpi / 16);
 		
 		mGLSurfaceView = new GLSurfaceView(this);
-		render = new Renderer("png/wtmp", 0, 30, 0);
+		render = new Renderer("pkm/wtmp", 0, 30, 1);
 		mGLSurfaceView.setRenderer(render);
 		mGLSurfaceView.post(new Runnable() {
 
@@ -86,6 +86,19 @@ public class Moon extends Activity {
 								render.toRight();
 							}
 						}
+//						float halfA = (250000 * getResources().getDisplayMetrics().xdpi / 160) / disPerFrame / 4;
+//						int t = 0;
+//						float  v = -velocityX;
+//						while(true){
+//							t = (int) ((halfA + Math.sqrt(halfA * halfA +4 * v * disPerFrame)) / v / 2);
+//							v = v - halfA * 2 * t;
+//							
+//							if(v > 0 && t > 0){
+//								Log.e("debugT", "t:"+t);
+//							}else{
+//								break;
+//							}
+//						}
 						return true;
 					}
 
